@@ -1,0 +1,14 @@
+public class ContactTriggerHandler extends TriggerHandler {
+    private Map<Id, Contact> newConMap;
+
+    public ContactTriggerHandler () {
+        this.newConMap = (Map<Id, contact>) Trigger.newMap;
+    }
+
+    public override void afterUpdate() {
+        for (Contact contact : newConMap.values()) {
+            Account account = [select Id, ContactEmails__c from Account where id=:contact.accountId limit 1];
+            ManipulateAccounts.updateEmail(account);
+        }
+    }
+}

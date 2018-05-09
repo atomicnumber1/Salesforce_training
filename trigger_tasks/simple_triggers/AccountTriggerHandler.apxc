@@ -1,0 +1,9 @@
+public class AccountTriggerHandler {
+    private Map<Id, Account> newAccMap;
+
+    public AccountTriggerHandler () {
+        this.newAccMap = (Map<Id, Account>) Trigger.newMap;
+    }
+
+    
+}

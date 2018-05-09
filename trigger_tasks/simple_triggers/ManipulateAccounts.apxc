@@ -1,0 +1,86 @@
+public class ManipulateAccounts {
+
+    public ManipulateAccounts () {
+
+    }
+
+    public static void deleteAllAccounts () {
+        try {
+            delete [select Id from Account];
+        } catch (DmlException e) {
+            System.debug('Got DmlException while deleting Accounts' + e.getMessage());
+        }
+    }
+
+    public static void createAccounts (Integer nAccounts, Integer nContacts) {
+        Integer i, j;
+        List<Account> aList = new List<Account>();
+        List<Contact> cList = new List<Contact>();
+
+        for (i = 0; i < nAccounts; ++i)
+            aList.add(new Account(Name='TestAccount ' + String.valueOf(i)));
+
+        try {
+            insert aList;
+        } catch(DmlException e) {
+            System.debug('Dml Exception occurred while inserting Accounts' + e.getMessage());
+        }
+
+        for (i = 0; i < nAccounts; ++i)
+            for (j = 0; j < nContacts; ++j)
+                cList.add(new Contact(LastName='TestContact ' + String.valueOf(j) + 'for accountId: ' + aList[i].ID, AccountId=aList[i].ID));
+
+        try {
+            insert cList;
+        } catch (DmlException e) {
+            System.debug('Dml Exception occurred while inserting contacts' + e.getMessage());
+        }
+    }
+
+    public static void updateEmail () {
+        List<Account> aList;
+        List<Contact> cList;
+
+        aList = [select Id, ContactEmails__c from Account];
+        cList = [select Id, Email, accountId from Contact];
+
+		// This works; but not the ideal method.
+		// It has a runtime of O(n2)
+        for (Account account: aList) {
+            String contactEmails = '';
+            for (Contact contact: cList)
+                if ((contact.accountId == account.Id) &&
+                    (contact.Email != NULL))
+                    contactEmails += contact.Email + ';';
+            account.ContactEmails__c = contactEmails;
+        }
+
+        try {
+            update aList;
+        } catch (DmlException e) {
+            System.debug('DmlException occurred while updating accounts' + e.getMessage());
+        }
+
+    }
+
+    public static void updateEmail (Account account) {
+        List<Contact> cList;
+        String contactEmails;
+
+        contactEmails = '';
+
+        cList = [select Id, Email from Contact where accountId=:account.ID];
+        for (Contact contact : cList)
+            If (contact.Email != NULL)
+            	contactEmails += contact.Email + ';';
+
+        account.ContactEmails__c = contactEmails;
+
+        try {
+            update account;
+        } catch (DmlException e) {
+            System.debug('DmlException occurred while updating account ' + e.getMessage());
+        }
+    }
+
+}
