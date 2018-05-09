@@ -1,0 +1,31 @@
+public with sharing class CustomPicklist {
+    public ID accID {get; set;}
+    public List<Contact> contacts {get; set;}
+
+    public List<SelectOption> getItems() {
+        List<SelectOption> options = new List<SelectOption>();
+
+        options.add(new SelectOption(' ', 'None'));
+        for (Account a : [SELECT Id, Name FROM Account])
+            options.add(new SelectOption(a.ID, a.Name));
+
+        return options;
+    }
+
+    public PageReference setContacts() {
+        contacts = [SELECT ID, FirstName, LastName, Phone, Email FROM Contact WHERE accountId=:accID];
+        return Null;
+    }
+
+    public PageReference save() {
+        try {
+        	update contacts;
+        } catch (DmlException e) {
+            System.debug('Got DmlException while updating contacts: ' + e.getMessage());
+            ApexPages.addMessages(e);
+        }
+
+        return ApexPages.currentPage();
+    }
+
+}

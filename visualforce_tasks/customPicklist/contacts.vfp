@@ -1,0 +1,29 @@
+<apex:page controller="customPicklist">
+	<apex:form>
+        <apex:pageBlock >
+            <apex:selectList size="1" value="{! accID }">
+                <apex:selectOptions value="{! Items }" />
+                <apex:actionSupport event="onchange" action="{! setContacts }" rerender="out" />
+            </apex:selectList>
+            <apex:pageMessages />
+                <!-- Contacts List -->
+            <apex:pageBlockTable value="{! contacts }" var="ct" id="out">
+                <apex:column headerValue="{! ct.FirstName }">
+                    <apex:inputField value="{! ct.FirstName }"/>
+                </apex:column>
+                <apex:column headerValue="{! ct.LastName }">
+                    <apex:inputField value="{! ct.LastName }"/>
+                </apex:column>
+                <apex:column>
+                	<apex:inputField value="{! ct.Phone }"/>
+                </apex:column>
+                <apex:column>
+                    <apex:inputField value="{! ct.Email }"/>
+                </apex:column>
+            </apex:pageBlockTable>
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!save}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
