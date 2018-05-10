@@ -38,46 +38,36 @@ public class ManipulateAccounts {
     }
 
     public static void updateEmail () {
-        List<Account> aList;
-        List<Contact> cList;
+        // Set<Id> accountIds;
+        // Map<Id, Account> accountRecords;
 
-        aList = [select Id, ContactEmails__c from Account];
-        cList = [select Id, Email, accountId from Contact];
+        // accountIds = new Set<Id>();
+        // accountRecords = new Map<Id, Account>();
 
-        Map<Id, Account> accountMap = new Map<Id, Account>(aList);
-        Map<Id, List<Contact>> acMap = new Map<Id, List<Contact>>();
+        // for (Contact contact : [select Id, Email, accountId from Contact])
+        //     accountIds.add(contact.accountId);
 
-        for (Contact contact : cList) {
-            if (!acMap.containsKey(contact.accountId))
-                acMap.put(contact.accountId, new List<Contact>());
-            acMap.get(contact.accountId).add(contact);
-        }
+        // for (Id id : accountIds)
+        //     if (!accountRecords.containsKey(id))
+        //         accountRecords.put(id, new Account(id = id, ContactEmails__c  = ''));
 
-        for (List<Contact> contacts : acMap.values()) {
-            String ContactEmails = '';
-        	for (Contact contact : contacts)
-                if (contact.Email != NULL)
-        			ContactEmails += contact.Email + ';';
-    		accountMap.get(contacts[0].accountId).ContactEmails__c = ContactEmails;
-        }
+        // // Query all contacts for all accounts, update Rollup Field value
+        // for(Contact contact :[select id, Email, AccountID from Contact where AccountId in :accountIds])
+        //     accountRecords.get(contact.AccountId).ContactEmails__c  += contact.Email + ';';
 
-		// This works; but not the ideal method.
-		// It has a runtime of O(n2)
-        //for (Account account: aList) {
-        //    String contactEmails = '';
-        //    for (Contact contact: cList)
-        //        if ((contact.accountId == account.Id) &&
-        //            (contact.Email != NULL))
-        //            contactEmails += contact.Email + ';';
-        //    account.ContactEmails__c = contactEmails;
-        //}
+        Map<Id, Account> accountRecords;
+
+        accountRecords = new Map<Id, Account>([select id, ContactEmails__c from Account]);
+
+        for (Contact contact : [select id, Email, accountId from Contact])
+            accountRecords.get(contact.accountId).ContactEmails__c = contact.Email + ';';
 
         try {
-            update aList;
+            // Commit changes to the database
+            Database.update(accountRecords.values());
         } catch (DmlException e) {
             System.debug('DmlException occurred while updating accounts' + e.getMessage());
         }
-
     }
 
     public static void updateEmail (Account account) {
