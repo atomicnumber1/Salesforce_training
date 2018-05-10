@@ -44,16 +44,33 @@ public class ManipulateAccounts {
         aList = [select Id, ContactEmails__c from Account];
         cList = [select Id, Email, accountId from Contact];
 
+        Map<Id, Account> accountMap = new Map<Id, Account>(aList);
+        Map<Id, List<Contact>> acMap = new Map<Id, List<Contact>>();
+
+        for (Contact contact : cList) {
+            if (!acMap.containsKey(contact.accountId))
+                acMap.put(contact.accountId, new List<Contact>());
+            acMap.get(contact.accountId).add(contact);
+        }
+
+        for (List<Contact> contacts : acMap.values()) {
+            String ContactEmails = '';
+        	for (Contact contact : contacts)
+                if (contact.Email != NULL)
+        			ContactEmails += contact.Email + ';';
+    		accountMap.get(contacts[0].accountId).ContactEmails__c = ContactEmails;
+        }
+
 		// This works; but not the ideal method.
 		// It has a runtime of O(n2)
-        for (Account account: aList) {
-            String contactEmails = '';
-            for (Contact contact: cList)
-                if ((contact.accountId == account.Id) &&
-                    (contact.Email != NULL))
-                    contactEmails += contact.Email + ';';
-            account.ContactEmails__c = contactEmails;
-        }
+        //for (Account account: aList) {
+        //    String contactEmails = '';
+        //    for (Contact contact: cList)
+        //        if ((contact.accountId == account.Id) &&
+        //            (contact.Email != NULL))
+        //            contactEmails += contact.Email + ';';
+        //    account.ContactEmails__c = contactEmails;
+        //}
 
         try {
             update aList;
