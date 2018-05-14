@@ -1,0 +1,25 @@
+trigger ReplicateRollupSummaryField on Contact (after insert, after update, after delete) {
+
+    Set<Id> accountIds = new Set<Id>();
+
+    Map<Id, Account> accountMap = new Map<Id, Account>();
+
+    // Get all account ids for the current contacts
+    for (Contact c: Trigger.isDelete ? Trigger.old : Trigger.new)
+        accountIds.add(c.accountId);
+
+    // Create a Map of accounts to accountIds
+    for (Id id : accountIds)
+        accountMap.put(id, new Account(Id=id, Total_Vehicles__c = 0));
+
+    // Update Total Vehicles field for all accounts
+    for (Contact c : [select id, accountId, Number_of_Vehicles__c from contact where accountid in :accountIds])
+        if (c.Number_of_Vehicles__c != NULL)
+            accountMap.get(c.accountId).Total_Vehicles__c += c.Number_of_Vehicles__c;
+
+    try {
+    	upsert accountMap.values();
+    } catch (DmlException e) {
+        System.debug('Got DmlException While updating accounts' + e.getMessage());
+    }
+}
