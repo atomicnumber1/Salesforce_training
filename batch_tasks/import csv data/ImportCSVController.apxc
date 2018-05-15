@@ -1,0 +1,28 @@
+public class ImportCSVController {
+
+    public Blob csvblob {get; set;}
+    public String csv_filename {get; set;}
+
+    private String csv;
+    private String[] rows;
+
+    public ImportCSVController(){
+
+    }
+
+    public void importCSVFile() {
+        try {
+            csv = csvblob.toString();
+            importCSVBatch csvBatch = new importCSVBatch(csv);
+            Id batchId = Database.executeBatch(csvBatch);
+            ApexPages.Message successMessage = new ApexPages.Message(ApexPages.Severity.INFO, 'Batch Id: ' + batchId);
+            System.debug(batchId);
+
+        } catch (Exception e) {
+            ApexPages.Message errorMessage = new ApexPages.Message(ApexPages.severity.ERROR,'An error has occured while importing data Please make sure input csv file is correct');
+            ApexPages.addMessage(errorMessage);
+            System.debug(e.getMessage());
+        }
+
+    }
+}

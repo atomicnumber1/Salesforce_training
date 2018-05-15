@@ -1,0 +1,63 @@
+global class ImportCSVBatch implements Database.Batchable<String> {
+
+    private String csv;
+
+    global importCSVBatch (String csv) {
+        this.csv = csv;
+    }
+
+
+    global Iterable<String> start(Database.BatchableContext bc) {
+        return Splitter.safe_split(this.csv, '\n');
+    }
+
+
+    global void execute(Database.BatchableContext bc, List<String> rows){
+        Integer i;
+    	List<account> accounts = new List<Account>();
+    	List<Contact> contacts = new List<Contact>();
+
+        try {
+
+            // ignore header
+            for(i = 1; i < rows.size(); ++i) {
+                Account account = new Account();
+                Contact contact = new Contact();
+                string[] columns = rows[i].split(',');
+
+                /* invalid csv */
+                if (columns.size() < 2) {
+                    return;
+                }
+
+                account.name = columns[0] + ' ' + columns[1];
+                accounts.add(account);
+
+                contact.FirstName = columns[0];
+                contact.LastName = columns[1];
+                contacts.add(contact);
+            }
+
+            insert accounts;
+        } catch(DmlException e) {
+            System.debug(e.getMessage());
+
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+        }
+
+        // create contacts now with accountIds generated from prevoius operation
+        for (i = 0; i < contacts.size(); ++i)
+            contacts[i].accountId = accounts[i].Id;
+
+        try {
+            insert contacts;
+        } catch (DmlException e) {
+			System.debug(e);
+        }
+    }
+
+    global void finish(Database.BatchableContext bc){
+		return;
+    }
+}

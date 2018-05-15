@@ -1,0 +1,11 @@
+<apex:page controller="ImportCSVController">
+    <apex:form >
+        <apex:pagemessages />
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="4">
+                  <apex:inputFile value="{!csvblob}"  filename="{!csv_filename}"/>
+                  <apex:commandButton value="Import Accounts & Contacts" action="{!importCSVFile}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+   </apex:form>
+</apex:page>

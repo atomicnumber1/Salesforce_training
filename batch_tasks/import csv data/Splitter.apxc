@@ -1,0 +1,63 @@
+public class Splitter {
+    /*
+     * Splitter: To Split Too long Strings based on regex
+     *
+     */
+
+    public Splitter () {
+
+    }
+
+    /*
+     * Splits a very long string based on delimeter (regex)
+     * returns a list of string
+     */
+    public static List<String> safe_split (String str, String delim) {
+
+        /*
+         * to reset limit of regex matcher
+         * to avoid 'Regex Too Complicated' error
+         */
+        Integer REGEX_MATCHED_LIMIT = 500;
+        Integer REGEX_MATCHED_COUNT = 0;
+
+        /* list of matched strings */
+        List<String> matches = new List<String>();
+
+        Matcher m = Pattern.compile(delim).matcher(str);
+
+        Integer last_end_index = 0;
+
+        /* loop until we're out of matches */
+        while(!m.hitEnd()) {
+
+            /* loop until we hit regex_find_limit */
+            while(REGEX_MATCHED_COUNT < REGEX_MATCHED_LIMIT && !m.hitEnd()) {
+                if(m.find()) {
+                    matches.add(str.substring(last_end_index, m.start()));
+                    last_end_index = m.end();
+
+                } else {
+                    matches.add(str.substring(last_end_index));
+                    last_end_index = str.length();
+
+                }
+
+                REGEX_MATCHED_COUNT++;
+            }
+
+            /*
+             * Note: Using region() to advance instead of substring() saves
+             * drastically on heap size. Nonetheless, we still must reset the
+             * (unmodified) input sequence to avoid a 'Regex too complicated'
+             * error.
+             */
+            m.reset(str);
+            m.region(last_end_index, m.regionEnd());
+
+            REGEX_MATCHED_COUNT = 0;
+        }
+
+        return matches;
+    }
+}
