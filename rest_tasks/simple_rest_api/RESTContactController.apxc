@@ -1,0 +1,39 @@
+@RestResource(urlMapping='/contact/*')
+global with sharing class RestContactController {
+
+    global with sharing class ContactWrapper {
+        global Boolean success {get; set;}
+        global String message {get; set;}
+    }
+
+    @HttpGet
+    global static List<Contact> getContacts() {
+        List<Contact> contacts;
+
+        contacts = [select Id, FirstName, LastName From Contact limit 100];
+
+        return contacts;
+    }
+
+    @HttpPost
+    global static ContactWrapper createNewContact(String FirstName, String LastName) {
+
+        System.debug('FirstName: ' + FirstName);
+        System.debug('LastName: ' + LastName);
+
+        ContactWrapper response = new ContactWrapper();
+
+        Contact c = new Contact(FirstName = FirstName, LastName = LastName);
+        try {
+            insert c;
+            response.success = True;
+            response.message = 'Created Contact';
+        } catch (Exception e) {
+            response.success = False;
+            response.message = e.getMessage();
+        }
+
+        return response;
+    }
+
+}
