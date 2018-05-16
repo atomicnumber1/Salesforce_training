@@ -1,0 +1,10 @@
+public class ContactQueueable implements Queueable {
+    public void execute(QueueableContext context) {
+        Contact c = new Contact(FirstName='Jay', LastName='Bakshi');
+        try {
+            insert c;
+        } Catch (DmlException e) {
+            System.debug('Got DmlException while inserting contact' + e.getMessage());
+        }
+    }
+}
