@@ -1,0 +1,21 @@
+<aura:component >
+    <aura:registerEvent name="NavbarEvent" type="c:NavbarEvent"/>
+    <nav class="slds-nav-vertical" aria-label="Sub page">
+        <div class="slds-nav-vertical__section">
+            <ul>
+                <li class="slds-nav-vertical__item">
+                    <lightning:button aura:id="getContactDetails" class="slds-nav-vertical__action" onclick="{! c.handleClick}" label="Personal Details" />
+                </li>
+                <li class="slds-nav-vertical__item ">
+                    <lightning:button aura:id="getCertifications" class="slds-nav-vertical__action" onclick="{! c.handleClick}" label="Certifications" />
+                </li>
+                <li class="slds-nav-vertical__item ">
+                    <lightning:button aura:id="getEmergencyContacts" class="slds-nav-vertical__action" onclick="{! c.handleClick}" label="Emergency Contacts" />
+                </li>
+                <li class="slds-nav-vertical__item ">
+                    <lightning:button aura:id="getColleagues" class="slds-nav-vertical__action" onclick="{! c.handleClick}" label="Know Your Colleagues" />
+                </li>
+            </ul>
+        </div>
+    </nav>
+</aura:component>

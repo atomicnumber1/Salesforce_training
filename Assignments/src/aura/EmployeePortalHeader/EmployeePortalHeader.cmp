@@ -1,0 +1,10 @@
+<aura:component controller="EmployeePortalController">
+    <aura:attribute name="greeting" type="String"/>
+    <aura:attribute name="name" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <header class="slds-page-header">
+        <center>
+            <h1 class="slds-page-header__title">{! v.greeting } {! v.name + '!'}</h1>
+        </center>
+    </header>   
+</aura:component>

@@ -1,0 +1,19 @@
+{
+    "projectName": "Assignments",
+    "username": "pomalakash@resourceful-raccoon-213438.com",
+    "id": "2fd258a0-64b6-11e8-9781-eb528961b0f4",
+    "namespace": "",
+    "orgType": "developer",
+    "loginUrl": "https://login.salesforce.com/",
+    "instanceUrl": "https://resourceful-raccoon-213438-dev-ed.my.salesforce.com",
+    "workspace": "C:\\Users\\Incapsulate-PC\\Developer\\Salesforce_training",
+    "subscription": [
+        "ApexClass",
+        "ApexComponent",
+        "ApexPage",
+        "ApexTestSuite",
+        "ApexTrigger",
+        "AuraDefinitionBundle",
+        "StaticResource"
+    ]
+}

@@ -1,0 +1,12 @@
+<aura:application extends="force:slds">
+    <c:EmployeePortalHeader />
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_1-of-3">
+            <c:EmployeePortalNavbar />
+        </div>
+        <div class="slds-col slds-size_2-of-3">
+            <c:EmployeePortalBody />
+        </div>
+    </div>
+    <c:EmployeePortalFooter />
+</aura:application>

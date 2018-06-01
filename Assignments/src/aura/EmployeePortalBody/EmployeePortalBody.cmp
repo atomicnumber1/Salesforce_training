@@ -1,0 +1,151 @@
+<aura:component controller="EmployeePortalController" implements="force:appHostable, flexipage:availableForAllPageTypes" access="global">
+    <aura:dependency resource="markup://force:navigateToSObject" type="EVENT"/>
+    <aura:attribute name="display" type="String" />
+    <aura:attribute name="Me" type="Contact" />
+    <aura:attribute name="Cert" type="Certificate__c" />
+    <aura:attribute name="EmCon" type="Contact[]" />
+    <aura:attribute name="Colleague" type="Contact[]" />
+
+    <aura:handler event="c:NavbarEvent" action="{!c.PopulateDetails}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:if isTrue="{! and(v.display == 'Personal Details', !empty(v.Me)) }">
+        <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_cell-buffer">
+
+            <tr>
+                <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                    <div class="slds-truncate" title="First Name"><b>First Name</b></div>
+                </th>
+                <td scope="col">
+                    <div class="slds-truncate">{!v.Me.FirstName}</div>
+                </td>
+
+            </tr>
+            <tr>
+                <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                    <div class="slds-truncate" title="Last Name"><b>Last Name</b></div>
+                </th>
+                <td scope="col">
+                    <div class="slds-truncate">{!v.Me.LastName}</div>
+                </td>
+
+            </tr>
+            <tr>
+                <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                    <div class="slds-truncate" title="Designation"><b>Designation</b></div>
+                </th>
+                <td scope="col">
+                    <div class="slds-truncate">{!v.Me.Designation__c}</div>
+                </td>
+
+            </tr>
+            <tr>
+                <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                    <div class="slds-truncate" title="Technology"><b>Technology</b></div>
+                </th>
+                <td scope="col">
+                    <div class="slds-truncate">{!v.Me.Technology__c}</div>
+                </td>
+
+            </tr>
+            <tr>
+                <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                    <div class="slds-truncate" title="Social Media"><b>Social Media</b></div>
+                </th>
+                <td scope="col">
+                    <div class="slds-truncate">{!v.Me.Social_Media_Link__c}</div>
+                </td>
+
+            </tr>
+            <tr>
+                <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                    <div class="slds-truncate" title="Interests"><b>Interests</b></div>
+                </th>
+                <td scope="col">
+                    <div class="slds-truncate">{!v.Me.Interests__c}</div>
+                </td>
+
+            </tr>
+        </table>
+    </aura:if>
+    <aura:if isTrue="{! and(v.display== 'Certifications', !empty(v.Cert)) }">
+        <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_cell-buffer">
+            <tr>
+                <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                    <div class="slds-truncate" title="Name"><b>Name</b></div>
+                </th>
+                <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                    <div class="slds-truncate" title="Link"><b>Link</b></div>
+                </th>
+                <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                    <div class="slds-truncate" title="Expiration"><b>Expiration</b></div>
+                </th>
+            </tr>
+            <aura:iteration var="dt" items="{! v.Cert }">
+                <tr>
+                    <td scope="col">
+                        <div class="slds-truncate">{! dt.Name }</div>
+                    </td>
+                    <td scope="col">
+                        <div class="slds-truncate">{! dt.Link__c }</div>
+                    </td>
+                    <td scope="col">
+                        <div class="slds-truncate">{! dt.Valid_Till__c }</div>
+                    </td>
+                </tr>
+            </aura:iteration>
+        </table>
+    </aura:if>
+    <aura:if isTrue="{! and(v.display== 'Emergency Contacts', !empty(v.EmCon)) }">
+        <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_cell-buffer">
+            <tr>
+                <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                    <div class="slds-truncate" title="Name"><b>Name</b></div>
+                </th>
+                <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                    <div class="slds-truncate" title="Number"><b>Number</b></div>
+                </th>
+                <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                    <div class="slds-truncate" title="Email"><b>Email</b></div>
+                </th>
+                <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                    <div class="slds-truncate" title="Relationship"><b>Relationship</b></div>
+                </th>
+            </tr>
+            <aura:iteration var="dt" items="{! v.EmCon }">
+                <tr>
+                    <td scope="col">
+                        <div class="slds-truncate">{! dt.Name }</div>
+                    </td>
+                    <td scope="col">
+                        <div class="slds-truncate">{! dt.MobilePhone }</div>
+                    </td>
+                    <td scope="col">
+                        <div class="slds-truncate">{! dt.Email }</div>
+                    </td>
+                    <td scope="col">
+                        <div class="slds-truncate">{! dt.Relationship__c }</div>
+                    </td>
+                </tr>
+            </aura:iteration>
+        </table>
+    </aura:if>
+    <aura:if isTrue="{! v.display== 'Colleagues' }">
+        <lightning:input name="search" aura:id="keyword" onchange="{! c.findColleague }" />
+        <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_cell-buffer">
+            <tr>
+                <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                    <div class="slds-truncate" title="Name"><b>Name</b></div>
+                </th>
+            </tr>
+            <aura:iteration var="dt" items="{! v.Colleague }">
+                <tr>
+                    <td scope="col">
+                        <lightning:button class="slds-truncate" onclick="{! c.navigateToSObject }" value="{!dt}" label = "{! dt.Name }" name="{! dt.Name }" />
+                    </td>
+
+                </tr>
+            </aura:iteration>
+        </table>
+    </aura:if>
+</aura:component>
