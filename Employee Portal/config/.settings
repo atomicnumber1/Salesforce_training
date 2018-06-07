@@ -1,0 +1,18 @@
+{
+    "projectName": "Employee Portal",
+    "username": "atomicnumber1@atomicnumber1.com",
+    "id": "88c18920-63dc-11e8-9781-eb528961b0f4",
+    "namespace": "",
+    "orgType": "developer",
+    "loginUrl": "https://login.salesforce.com/",
+    "instanceUrl": "https://ap5.salesforce.com",
+    "workspace": "C:\\Users\\Incapsulate-PC\\Developer\\Salesforce_training",
+    "subscription": [
+        "ApexClass",
+        "ApexComponent",
+        "ApexPage",
+        "ApexTrigger",
+        "AuraDefinitionBundle",
+        "StaticResource"
+    ]
+}
