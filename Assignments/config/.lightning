@@ -389,5 +389,56 @@
         },
         "DefType": "CONTROLLER",
         "Format": "JS"
+    },
+    {
+        "attributes": {
+            "type": "AuraDefinition",
+            "url": "/services/data/v42.0/tooling/sobjects/AuraDefinition/0Ad7F000001WHFjSAO"
+        },
+        "Id": "0Ad7F000001WHFjSAO",
+        "AuraDefinitionBundleId": "0Ab7F000000VdS0SAK",
+        "AuraDefinitionBundle": {
+            "attributes": {
+                "type": "AuraDefinitionBundle",
+                "url": "/services/data/v42.0/tooling/sobjects/AuraDefinitionBundle/0Ab7F000000VdS0SAK"
+            },
+            "DeveloperName": "PieChart"
+        },
+        "DefType": "HELPER",
+        "Format": "JS"
+    },
+    {
+        "attributes": {
+            "type": "AuraDefinition",
+            "url": "/services/data/v42.0/tooling/sobjects/AuraDefinition/0Ad7F000001WHFeSAO"
+        },
+        "Id": "0Ad7F000001WHFeSAO",
+        "AuraDefinitionBundleId": "0Ab7F000000VdS0SAK",
+        "AuraDefinitionBundle": {
+            "attributes": {
+                "type": "AuraDefinitionBundle",
+                "url": "/services/data/v42.0/tooling/sobjects/AuraDefinitionBundle/0Ab7F000000VdS0SAK"
+            },
+            "DeveloperName": "PieChart"
+        },
+        "DefType": "COMPONENT",
+        "Format": "XML"
+    },
+    {
+        "attributes": {
+            "type": "AuraDefinition",
+            "url": "/services/data/v42.0/tooling/sobjects/AuraDefinition/0Ad7F000001WHFoSAO"
+        },
+        "Id": "0Ad7F000001WHFoSAO",
+        "AuraDefinitionBundleId": "0Ab7F000000VdS0SAK",
+        "AuraDefinitionBundle": {
+            "attributes": {
+                "type": "AuraDefinitionBundle",
+                "url": "/services/data/v42.0/tooling/sobjects/AuraDefinitionBundle/0Ab7F000000VdS0SAK"
+            },
+            "DeveloperName": "PieChart"
+        },
+        "DefType": "CONTROLLER",
+        "Format": "JS"
     }
 ]

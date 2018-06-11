@@ -1,0 +1,6 @@
+<aura:component controller="EmployeePortalController" implements="flexipage:availableForAllPageTypes">
+	<ltng:require scripts="{!$Resource.chartJS}" afterScriptsLoaded="{!c.generateChart}"/>
+    <div class="slds-box">
+		<canvas aura:id="pieChart" height="1" width="5"></canvas>
+    </div>
+</aura:component>

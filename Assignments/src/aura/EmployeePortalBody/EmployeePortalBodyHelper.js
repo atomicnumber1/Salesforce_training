@@ -54,6 +54,9 @@
     	console.log(data);
 	},
     populateEmergencyContacts : function(component, data) {
+        if (data.length > 1) {
+            component.set("v.allowDeletingContact","true");
+        }
         component.set("v.display", 'Emergency Contacts');
         component.set("v.EmCon", data);
      	console.log(data);

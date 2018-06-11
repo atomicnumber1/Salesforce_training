@@ -25,6 +25,11 @@ public with sharing class EmployeePortalController {
     }
 
     @AuraEnabled
+    public static List<Object> getCertificationsPie () {
+        return [select Name, COUNT(id) from Certificate__c Group By Name];
+    }
+
+    @AuraEnabled
     public static  List<Contact> getEmergencyContacts () {
         try {
             Contact c = [select Id from Contact where Name =:userinfo.getName() limit 1];

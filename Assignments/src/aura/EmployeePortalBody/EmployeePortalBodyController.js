@@ -58,5 +58,38 @@
                    });
                 }
 		});
+	},
+
+	deleteEmergencyContact: function(component, event, helper) {
+        let result = confirm("Want to delete?");
+        if (result) {
+			component.set("v.emergencyContactRecordId", event.getSource().get("v.value"));
+            component.find("deleteEmergencyContact").reloadRecord();
+        }
+	},
+
+	emergencyContactUpdated: function(component, event, helper) {
+        component.find("deleteEmergencyContact").deleteRecord($A.getCallback(function(deleteResult) {
+            // NOTE: If you want a specific behavior(an action or UI behavior) when this action is successful
+            // then handle that in a callback (generic logic when record is changed should be handled in recordUpdated event handler)
+            if (deleteResult.state === "SUCCESS" || deleteResult.state === "DRAFT") {
+				// record is deleted
+				console.log("Record is deleted.");
+				// record is deleted, show a toast UI message
+				var resultsToast = $A.get("e.force:showToast");
+				resultsToast.setParams({
+					"title": "Deleted",
+					"message": "The record was deleted."
+				});
+				resultsToast.fire();
+				helper.getDetails(component, "c.getEmergencyContacts");
+            } else if (deleteResult.state === "INCOMPLETE") {
+                console.log("User is offline, device doesn't support drafts.");
+            } else if (deleteResult.state === "ERROR") {
+                console.log('Problem deleting record, error: ' + JSON.stringify(deleteResult.error));
+            } else {
+                console.log('Unknown problem, state: ' + deleteResult.state + ', error: ' + JSON.stringify(deleteResult.error));
+            }
+        }));
 	}
 })

@@ -5,6 +5,8 @@
     <aura:attribute name="Cert" type="Certificate__c" />
     <aura:attribute name="EmCon" type="Contact[]" />
     <aura:attribute name="Colleague" type="Contact[]" />
+    <aura:attribute name="allowDeletingContact" type="Boolean" default="false" />
+    <aura:attribute name="emergencyContactRecordId" type="Id" />
 
     <aura:handler event="c:NavbarEvent" action="{!c.PopulateDetails}"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
@@ -97,13 +99,20 @@
                         <div class="slds-truncate">{! dt.Valid_Till__c }</div>
                     </td>
                     <td scope="col">
-                        <lightning:button name="editCertificateForm" label="Edit" value="{! dt }" onclick="{! c.showEditCertificateForm }" />
+                        <lightning:button name="editCertificateForm" iconName="utility:edit" value="{! dt }" onclick="{! c.showEditCertificateForm }" />
                     </td>
                 </tr>
             </aura:iteration>
         </table>
+        <br/>
+        <c:PieChart/>
+        <br/>
     </aura:if>
     <aura:if isTrue="{! and(v.display== 'Emergency Contacts', !empty(v.EmCon)) }">
+        <force:recordData aura:id="deleteEmergencyContact"
+                        recordId="{! v.emergencyContactRecordId }"
+                        fields="Id"
+                        recordUpdated="{! c.emergencyContactUpdated }" />
         <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_cell-buffer">
             <tr>
                 <th scope="col" class="slds-text-title_caps slds-text-heading_label">
@@ -133,6 +142,11 @@
                     <td scope="col">
                         <div class="slds-truncate">{! dt.Relationship__c }</div>
                     </td>
+                    <aura:if isTrue="{! v.allowDeletingContact }">
+                        <td scope="col">
+                            <lightning:button iconName="utility:delete" name="deleteEmergencyContact" value="{! dt.Id }" onclick="{! c.deleteEmergencyContact }" />
+                        </td>
+                    </aura:if>
                 </tr>
             </aura:iteration>
         </table>
