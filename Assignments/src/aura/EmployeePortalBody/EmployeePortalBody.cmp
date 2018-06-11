@@ -8,7 +8,7 @@
 
     <aura:handler event="c:NavbarEvent" action="{!c.PopulateDetails}"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
-
+    <br/>
     <aura:if isTrue="{! and(v.display == 'Personal Details', !empty(v.Me)) }">
         <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_cell-buffer">
 
@@ -69,6 +69,10 @@
         </table>
     </aura:if>
     <aura:if isTrue="{! and(v.display== 'Certifications', !empty(v.Cert)) }">
+        <!-- add certificate form pop up -->
+        <lightning:overlayLibrary aura:id="overlayLib"/>
+        <lightning:button name="addCertificateForm" label="Add Certificate" onclick="{! c.showAddCertificateForm }" />
+        <br/> <br/>
         <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_cell-buffer">
             <tr>
                 <th scope="col" class="slds-text-title_caps slds-text-heading_label">
@@ -91,6 +95,9 @@
                     </td>
                     <td scope="col">
                         <div class="slds-truncate">{! dt.Valid_Till__c }</div>
+                    </td>
+                    <td scope="col">
+                        <lightning:button name="editCertificateForm" label="Edit" value="{! dt }" onclick="{! c.showEditCertificateForm }" />
                     </td>
                 </tr>
             </aura:iteration>

@@ -1,5 +1,6 @@
 <aura:application extends="force:slds">
     <c:EmployeePortalHeader />
+    <br/><br/>
     <div class="slds-grid slds-gutters">
         <div class="slds-col slds-size_1-of-3">
             <c:EmployeePortalNavbar />

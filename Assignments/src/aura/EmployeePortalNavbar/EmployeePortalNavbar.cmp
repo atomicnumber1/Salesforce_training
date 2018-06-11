@@ -1,5 +1,6 @@
 <aura:component >
     <aura:registerEvent name="NavbarEvent" type="c:NavbarEvent"/>
+    <br/>
     <nav class="slds-nav-vertical" aria-label="Sub page">
         <div class="slds-nav-vertical__section">
             <ul>

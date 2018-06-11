@@ -612,6 +612,20 @@
             "xmlName": "BrandingSet"
         },
         {
+            "directoryName": "flowCategories",
+            "inFolder": false,
+            "metaFile": false,
+            "suffix": "flowCategory",
+            "xmlName": "FlowCategory"
+        },
+        {
+            "directoryName": "lightningBolts",
+            "inFolder": false,
+            "metaFile": false,
+            "suffix": "lightningBolt",
+            "xmlName": "LightningBolt"
+        },
+        {
             "directoryName": "lightningExperienceThemes",
             "inFolder": false,
             "metaFile": false,
@@ -673,13 +687,6 @@
             "metaFile": false,
             "suffix": "cachePartition",
             "xmlName": "PlatformCachePartition"
-        },
-        {
-            "directoryName": "assistantRecommendationTypes",
-            "inFolder": false,
-            "metaFile": false,
-            "suffix": "assistantRecommendationType",
-            "xmlName": "AssistantRecommendationType"
         },
         {
             "directoryName": "topicsForObjects",

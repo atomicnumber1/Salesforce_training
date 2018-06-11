@@ -8,7 +8,8 @@ public with sharing class EmployeePortalController {
     @AuraEnabled
     public static Contact getContactDetails() {
         try {
-            return [select FirstName, LastName, Designation__c, Technology__c, Social_Media_Link__c, Interests__c from Contact where Name =:userinfo.getName() limit 1];
+            Id uid = userinfo.getUserId();
+            return [select FirstName, LastName, Designation__c, Technology__c, Social_Media_Link__c, Interests__c from Contact where User__c =:uid limit 1];
         } catch(DmlException e) {
             throw new AuraHandledException('Can\'t get user details');
         }
